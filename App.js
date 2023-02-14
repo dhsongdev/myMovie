@@ -10,8 +10,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 //components
-import Tabs from './navigator/Tabs';
-import Stacks from './navigator/Stacks';
+import Roots from './navigator/Roots';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -47,7 +46,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stacks />
+      <Roots />
     </NavigationContainer>
   );
 }

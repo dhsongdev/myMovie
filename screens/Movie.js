@@ -1,13 +1,19 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-const Movie = () => {
+export default function Movie({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
-      <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>무비</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigate('Stacks');
+        }}
+      >
+        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>무비</Text>
+      </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -16,5 +22,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default Movie;
