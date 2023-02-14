@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 const Movie = () => {
   return (
     <View style={styles.container}>
-      <Text style={{ fontFamily: 'baemin' }}>무비</Text>
+      <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>무비</Text>
     </View>
   );
 };

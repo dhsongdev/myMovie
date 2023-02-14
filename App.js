@@ -1,14 +1,17 @@
+//expo
 import { StatusBar } from 'expo-status-bar';
 import { Asset, useAssets } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { NavigationContainer } from '@react-navigation/native';
+//react-native
 import React, { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 //components
-import Tabs from './tabs/Tabs';
+import Tabs from './navigator/Tabs';
+import Stacks from './navigator/Stacks';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -32,7 +35,6 @@ export default function App() {
     const prepare = async () => {
       await Promise.all([...fonts, ...imgs]); //load assets functions
       setAppReady(true);
-      console.log('prepare complete');
       //app ready -> hide splashscreen
       await SplashScreen.hideAsync();
     };
@@ -45,7 +47,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tabs />
+      <Stacks />
     </NavigationContainer>
   );
 }

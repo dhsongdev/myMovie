@@ -1,19 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
 const Tv = () => {
   return (
-    <View style={styles.container}>
-      <Text style={{ fontFamily: 'baemin' }}>티비</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.main}>
+        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>TV의 민족</Text>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  container: {},
+  main: {
     alignItems: 'center',
+    justifyContent: 'center',
+    height: 600,
   },
 });
 
