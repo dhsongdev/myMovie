@@ -3,14 +3,14 @@ import { StatusBar } from 'expo-status-bar';
 import { Asset, useAssets } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-
 //react-native
 import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
+import styled, { ThemeProvider } from 'styled-components/native';
 //components
 import Roots from './navigator/Roots';
+import { lightMode, darkMode } from './themeColors';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -18,6 +18,8 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   //useStates
   const [appReady, setAppReady] = useState(false);
+
+  const colorScheme = useColorScheme();
 
   //preload assets
   const fonts = [
@@ -45,17 +47,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Roots />
-    </NavigationContainer>
+    <ThemeProvider theme={colorScheme == 'light' ? lightMode : darkMode}>
+      <NavigationContainer>
+        <Roots />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

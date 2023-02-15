@@ -1,24 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
-export default function Movie({ navigation: { navigate } }) {
+import styled from 'styled-components';
+
+const Main = styled.ScrollView`
+  background-color: ${(props) => props.theme.subBG};
+`;
+
+const Text = styled.Text`
+  color: ${(props) => props.theme.mainTextColor};
+`;
+
+export default function Movie() {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          navigate('Stacks');
-        }}
-      >
-        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>무비</Text>
-      </TouchableOpacity>
-    </View>
+    <Main>
+      <View>
+        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>무비의 민족</Text>
+      </View>
+    </Main>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

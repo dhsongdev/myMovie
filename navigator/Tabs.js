@@ -5,19 +5,23 @@ import Movie from '../screens/Movie';
 import Search from '../screens/Search';
 import Tv from '../screens/Tv';
 
+//color
+import { lightMode, darkMode } from '../themeColors';
+
 //icons
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabs() {
+export default function Tabs(props) {
   const colorScheme = useColorScheme();
 
   const themeColor = {
-    icon: colorScheme === 'dark' ? 'white' : 'black',
-    text: colorScheme === 'dark' ? 'white' : 'black',
-    tabBackground: colorScheme === 'dark' ? 'black' : 'white',
-    screenBackground: colorScheme === 'dark' ? '#261C2C' : 'white',
+    icon:
+      colorScheme === 'dark' ? darkMode.mainTextColor : lightMode.mainTextColor,
+    text:
+      colorScheme === 'dark' ? darkMode.mainTextColor : lightMode.mainTextColor,
+    tabBackground: colorScheme === 'dark' ? darkMode.mainBG : lightMode.mainBG,
   };
 
   return (

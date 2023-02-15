@@ -1,20 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
-const Search = () => {
+import styled from 'styled-components';
+
+const Main = styled.ScrollView`
+  background-color: ${(props) => props.theme.subBG};
+`;
+
+const Text = styled.Text`
+  color: ${(props) => props.theme.mainTextColor};
+`;
+
+export default function Search() {
   return (
-    <View style={styles.container}>
-      <Text style={{ fontFamily: 'baemin' }}>검색</Text>
-    </View>
+    <Main>
+      <View>
+        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>검색</Text>
+      </View>
+    </Main>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export default Search;
+}

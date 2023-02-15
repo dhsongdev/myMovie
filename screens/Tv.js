@@ -1,23 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
+
+import styled from 'styled-components';
+
+const Main = styled.ScrollView`
+  background-color: ${(props) => props.theme.subBG};
+`;
+
+const Text = styled.Text`
+  color: ${(props) => props.theme.mainTextColor};
+`;
 
 const Tv = () => {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.main}>
-        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>TV의 민족</Text>
-      </View>
-    </ScrollView>
+    <Main>
+      <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>TV의 민족</Text>
+    </Main>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-  main: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 600,
-  },
-});
 
 export default Tv;
