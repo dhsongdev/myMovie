@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const Main = styled.ScrollView`
   background-color: ${(props) => props.theme.subBG};

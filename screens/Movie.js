@@ -1,16 +1,20 @@
+//react components
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
+import MovieTopBanner from '../components/Banner';
+
+//Main components: container
 const Main = styled.ScrollView`
   background-color: ${(props) => props.theme.subBG};
 `;
 
-const Text = styled.Text`
-  color: ${(props) => props.theme.mainTextColor};
-`;
-
+//screen
 export default function Movie() {
-  return <Main></Main>;
+  return (
+    <Main>
+      <MovieTopBanner />
+    </Main>
+  );
 }
