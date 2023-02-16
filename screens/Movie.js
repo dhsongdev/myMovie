@@ -12,11 +12,5 @@ const Text = styled.Text`
 `;
 
 export default function Movie() {
-  return (
-    <Main>
-      <View>
-        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>무비의 민족</Text>
-      </View>
-    </Main>
-  );
+  return <Main></Main>;
 }

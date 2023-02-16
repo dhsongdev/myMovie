@@ -12,11 +12,5 @@ const Text = styled.Text`
 `;
 
 export default function Search() {
-  return (
-    <Main>
-      <View>
-        <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>검색</Text>
-      </View>
-    </Main>
-  );
+  return <Main></Main>;
 }

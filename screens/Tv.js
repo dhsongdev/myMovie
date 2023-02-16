@@ -12,11 +12,7 @@ const Text = styled.Text`
 `;
 
 const Tv = () => {
-  return (
-    <Main>
-      <Text style={{ fontFamily: 'baemin', fontSize: 40 }}>TV의 민족</Text>
-    </Main>
-  );
+  return <Main></Main>;
 };
 
 export default Tv;
