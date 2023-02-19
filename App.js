@@ -4,8 +4,8 @@ import { Asset, useAssets } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 //react-native
-import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import styled, { ThemeProvider } from 'styled-components/native';
 //components

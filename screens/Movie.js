@@ -1,5 +1,6 @@
 //react components
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { RefreshControl, ScrollView } from 'react-native';
 
 import styled from 'styled-components/native';
 
@@ -15,25 +16,38 @@ const Main = styled.ScrollView`
 
 //screen
 export default function Movie() {
+  const [refreshing, setRefreshing] = useState(false);
   const [populars, setPopulars] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getpopulars = async () => {
     const data = await (
       await fetch(
-        'https://api.themoviedb.org/3/movie/popular?api_key=bbbb0a1d7e005e258af9072da3838e01&language=en-US'
+        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`
       )
     ).json();
     setPopulars(data.results);
     setLoading(false);
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      getpopulars();
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   useEffect(() => {
     getpopulars();
   }, []);
 
   return (
-    <Main>
+    <Main
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <MovieTopBanner />
       {loading === true ? null : (
         <Slider data={populars} title={'Popular Now'} />
