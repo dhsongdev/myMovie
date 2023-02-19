@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Movie from '../screens/Movie';
 import Search from '../screens/Search';

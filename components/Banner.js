@@ -1,3 +1,4 @@
+//now playing movies
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, ActivityIndicator } from 'react-native';
 
@@ -15,14 +16,14 @@ const backdropPath = (path) => {
 };
 
 const Banner = styled.View`
-  padding: 20px;
+  padding: 25px;
 `;
 
 //Banner image title style
 const BannerTitle = styled.Text`
   font-size: ${windowWidth / 15}px;
   font-weight: 300;
-  text-shadow: white 0 0 6px;
+  text-shadow: black 0 0 6px;
 `;
 
 export default function MovieTopBanner() {
@@ -32,7 +33,7 @@ export default function MovieTopBanner() {
   const getUpComing = async () => {
     const data = await (
       await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
       )
     ).json();
     setData(data.results);
@@ -70,13 +71,14 @@ export default function MovieTopBanner() {
               }}
             />
 
-            <BannerTitle>
+            <BannerTitle style={{ color: 'white' }}>
               <MaterialIcons
                 name="star-rate"
                 size={windowWidth / 20}
-                color="black"
+                color="white"
               />
-              {data[index].vote_average}
+              {` `}
+              {data[index].vote_average} / 10
             </BannerTitle>
           </Banner>
         ))
