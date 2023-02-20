@@ -1,17 +1,26 @@
 //react components
 import React, { useEffect, useState, useCallback } from 'react';
-import { RefreshControl, ScrollView } from 'react-native';
+import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
 
 import styled from 'styled-components/native';
 
 import MovieTopBanner from '../components/Banner';
 import Slider from '../components/Slider';
+import VMedia from '../components/VMedia';
 
 import { API_KEY } from '@env';
 
 //Main components: container
-const Main = styled.ScrollView`
+const Main = styled.FlatList`
   background-color: ${(props) => props.theme.subBG};
+`;
+
+const Title = styled.Text`
+  font-size: 30px;
+  padding: 10px;
+  margin-top: 5px;
+  font-weight: 600;
+  color: ${(props) => props.theme.mainTextColor};
 `;
 
 //screen
@@ -34,7 +43,7 @@ export default function Movie() {
   const getUpcomings = async () => {
     const data = await (
       await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US`
       )
     ).json();
     setUpcomings(data.results);
@@ -52,30 +61,34 @@ export default function Movie() {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      getPopulars();
+      getData();
       setRefreshing(false);
     }, 2000);
   }, []);
 
-  useEffect(() => {
-    getPopulars();
-    getUpcomings();
-    getTopRated();
+  const getData = async () => {
+    await Promise.all([getPopulars(), getUpcomings(), getTopRated()]);
     setLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
     <Main
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      ListHeaderComponent={
+        <View>
+          <MovieTopBanner />
+          <Slider data={upcomings} title={'Upcoming'} />
+          <Slider data={topRated} title={'Top Rated'} />
+          <Title>Popular Now</Title>
+        </View>
       }
-    >
-      <MovieTopBanner />
-      {loading === true ? null : <Slider data={upcomings} title={'Upcoming'} />}
-      {loading === true ? null : (
-        <Slider data={populars} title={'Popular Now'} />
-      )}
-      {loading === true ? null : <Slider data={topRated} title={'Top Rated'} />}
-    </Main>
+      data={populars}
+      renderItem={({ item, index }) => <VMedia data={item} index={index} />}
+    />
   );
 }
