@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
 
 import styled from 'styled-components';
 
@@ -32,23 +32,29 @@ const PosterTitle = styled.Text`
 `;
 
 export default function Slider({ data, title }) {
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{ margin: 5 }} key={item.id}>
+        <TouchableOpacity>
+          <PosterImg
+            source={{
+              uri: `${imgPath(item.poster_path)}`,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <Container>
       <Title>{title}</Title>
-      <PosterSlider showsHorizontalScrollIndicator={false} horizontal={true}>
-        {data.map((data, index) => (
-          <View style={{ margin: 5 }} key={data.id}>
-            <TouchableOpacity>
-              <PosterImg
-                source={{
-                  uri: `${imgPath(data.poster_path)}`,
-                }}
-              />
-            </TouchableOpacity>
-            {/* <PosterTitle>{data.original_title}</PosterTitle> */}
-          </View>
-        ))}
-      </PosterSlider>
+      <FlatList
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        data={data}
+        renderItem={renderItem}
+      />
     </Container>
   );
 }
