@@ -18,28 +18,50 @@ const Main = styled.ScrollView`
 export default function Movie() {
   const [refreshing, setRefreshing] = useState(false);
   const [populars, setPopulars] = useState([]);
+  const [upcomings, setUpcomings] = useState([]);
+  const [topRated, setTopRated] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getpopulars = async () => {
+  const getPopulars = async () => {
     const data = await (
       await fetch(
         `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`
       )
     ).json();
     setPopulars(data.results);
-    setLoading(false);
+  };
+
+  const getUpcomings = async () => {
+    const data = await (
+      await fetch(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+      )
+    ).json();
+    setUpcomings(data.results);
+  };
+
+  const getTopRated = async () => {
+    const data = await (
+      await fetch(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+      )
+    ).json();
+    setTopRated(data.results);
   };
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      getpopulars();
+      getPopulars();
       setRefreshing(false);
     }, 2000);
   }, []);
 
   useEffect(() => {
-    getpopulars();
+    getPopulars();
+    getUpcomings();
+    getTopRated();
+    setLoading(false);
   }, []);
 
   return (
@@ -49,13 +71,11 @@ export default function Movie() {
       }
     >
       <MovieTopBanner />
+      {loading === true ? null : <Slider data={upcomings} title={'Upcoming'} />}
       {loading === true ? null : (
         <Slider data={populars} title={'Popular Now'} />
       )}
-      {loading === true ? null : (
-        <Slider data={populars} title={'Trending Now'} />
-      )}
-      {loading === true ? null : <Slider data={populars} title={'Random'} />}
+      {loading === true ? null : <Slider data={topRated} title={'Top Rated'} />}
     </Main>
   );
 }

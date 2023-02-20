@@ -14,12 +14,12 @@ const Container = styled.View`
 const Title = styled.Text`
   font-size: 30px;
   padding: 10px;
+  margin-top: 5px;
+  font-weight: 600;
   color: ${(props) => props.theme.mainTextColor};
 `;
 
-const PosterSlider = styled.ScrollView`
-  padding: 0px 10px 10px 10px;
-`;
+const PosterSlider = styled.ScrollView``;
 
 const PosterImg = styled.Image`
   height: 240px;
