@@ -2,11 +2,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
 
+import { useQuery } from 'react-query';
 import styled from 'styled-components/native';
 
 import MovieTopBanner from '../components/Banner';
 import Slider from '../components/Slider';
 import VMedia from '../components/VMedia';
+import { movies } from '../api';
 
 import { API_KEY } from '@env';
 
@@ -26,53 +28,28 @@ const Title = styled.Text`
 //screen
 export default function Movie() {
   const [refreshing, setRefreshing] = useState(false);
-  const [populars, setPopulars] = useState([]);
-  const [upcomings, setUpcomings] = useState([]);
-  const [topRated, setTopRated] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const getPopulars = async () => {
-    const data = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`
-      )
-    ).json();
-    setPopulars(data.results);
-  };
-
-  const getUpcomings = async () => {
-    const data = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US`
-      )
-    ).json();
-    setUpcomings(data.results);
-  };
-
-  const getTopRated = async () => {
-    const data = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
-      )
-    ).json();
-    setTopRated(data.results);
-  };
+  const {
+    isLoading: upcomingLoading,
+    error: upcomingError,
+    data: upcomingData,
+  } = useQuery('upcoming', movies.upcoming);
+  const {
+    isLoading: topRatedLoading,
+    error: topRatedError,
+    data: topRatedData,
+  } = useQuery('topRated', movies.topRated);
+  const {
+    isLoading: popularLoading,
+    error: popularError,
+    data: popularData,
+  } = useQuery('popular', movies.popular);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      getData();
       setRefreshing(false);
     }, 2000);
-  }, []);
-
-  const getData = async () => {
-    await Promise.all([getPopulars(), getUpcomings(), getTopRated()]);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getData();
   }, []);
 
   return (
@@ -82,12 +59,18 @@ export default function Movie() {
       ListHeaderComponent={
         <View>
           <MovieTopBanner />
-          <Slider data={upcomings} title={'Upcoming'} />
-          <Slider data={topRated} title={'Top Rated'} />
+          <Slider
+            data={upcomingLoading === false ? upcomingData.results : null}
+            title={'Upcoming'}
+          />
+          <Slider
+            data={topRatedLoading === false ? topRatedData.results : null}
+            title={'Top Rated'}
+          />
           <Title>Popular Now</Title>
         </View>
       }
-      data={populars}
+      data={popularLoading === false ? popularData.results : null}
       renderItem={({ item, index }) => <VMedia data={item} index={index} />}
     />
   );

@@ -1,8 +1,8 @@
 //now playing movies
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Dimensions, Image, ActivityIndicator } from 'react-native';
 
-import { MaterialIcons } from '@expo/vector-icons';
+import { useQuery } from 'react-query';
 
 import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
@@ -12,7 +12,7 @@ import { API_KEY } from '@env';
 const windowWidth = Dimensions.get('window').width;
 
 const backdropPath = (path) => {
-  return `https://image.tmdb.org/t/p/w500${path}`;
+  return `https://image.tmdb.org/t/p/original${path}`;
 };
 
 const Banner = styled.View`
@@ -27,22 +27,11 @@ const BannerTitle = styled.Text`
 `;
 
 export default function MovieTopBanner() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const getUpComing = async () => {
-    const data = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
-      )
-    ).json();
-    setData(data.results);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getUpComing();
-  }, []);
+  const { isLoading, data } = useQuery('nowPlaying', () =>
+    fetch(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
+    ).then((res) => res.json())
+  );
 
   return (
     <Swiper
@@ -53,16 +42,16 @@ export default function MovieTopBanner() {
       showsButtons={false}
       showsPagination={false}
     >
-      {loading === true ? (
+      {isLoading === true ? (
         <ActivityIndicator
           style={{ width: windowWidth, height: windowWidth / 1.8 }}
         ></ActivityIndicator>
       ) : (
-        data.map((array, index) => (
-          <Banner key={data[index].id}>
+        data.results.map((a, index) => (
+          <Banner key={a.id}>
             <Image
               source={{
-                uri: `${backdropPath(data[index].backdrop_path)}`,
+                uri: backdropPath(a.backdrop_path),
               }}
               style={{
                 width: windowWidth,
@@ -70,16 +59,6 @@ export default function MovieTopBanner() {
                 position: 'absolute',
               }}
             />
-
-            <BannerTitle style={{ color: 'white' }}>
-              <MaterialIcons
-                name="star-rate"
-                size={windowWidth / 20}
-                color="white"
-              />
-              {` `}
-              {data[index].vote_average} / 10
-            </BannerTitle>
           </Banner>
         ))
       )}

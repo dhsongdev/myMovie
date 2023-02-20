@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList } from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 
 import styled from 'styled-components';
 
@@ -22,9 +29,9 @@ const Title = styled.Text`
 const PosterSlider = styled.ScrollView``;
 
 const PosterImg = styled.Image`
-  height: 240px;
-  width: 160px;
-  border-radius: 10px;
+  height: 180px;
+  width: 120px;
+  border-radius: 5px;
 `;
 
 const PosterTitle = styled.Text`
@@ -46,7 +53,13 @@ export default function Slider({ data, title }) {
     );
   };
 
-  return (
+  return data === null ? (
+    <View
+      style={{ justifyContent: 'center', alignItems: 'center', height: 50 }}
+    >
+      <ActivityIndicator size="large" />
+    </View>
+  ) : (
     <Container>
       <Title>{title}</Title>
       <FlatList

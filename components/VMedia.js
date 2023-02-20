@@ -32,18 +32,14 @@ const Info = styled.View`
 const Title = styled.Text`
   font-size: 21px;
   font-weight: 600;
+  margin-bottom: 5px;
   color: ${(props) => props.theme.mainTextColor};
-`;
-
-const VoteAverage = styled.Text`
-  color: ${(props) => props.theme.subTextColor};
-  font-size: 17px;
-  opacity: 0.7;
 `;
 
 const ReleaseDate = styled.Text`
   color: ${(props) => props.theme.subTextColor};
   opacity: 0.8;
+  margin-bottom: 5px;
 `;
 
 const Overview = styled.Text`
@@ -61,19 +57,7 @@ export default function VMedia({ data, index }) {
           {`  `}
           {data.title.split(':', 1)}
         </Title>
-        <View style={{ flexDirection: 'row' }}>
-          <MaterialIcons
-            name="star-rate"
-            size={20}
-            style={{ opacity: 0.7 }}
-            color={
-              colorScheme === 'dark'
-                ? darkMode.mainTextColor
-                : lightMode.mainTextColor
-            }
-          />
-          <VoteAverage>{data.vote_average}</VoteAverage>
-        </View>
+
         <ReleaseDate>{data.release_date}</ReleaseDate>
         <Overview>
           {data.overview.substring(
