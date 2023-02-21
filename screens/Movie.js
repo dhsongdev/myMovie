@@ -1,8 +1,8 @@
 //react components
-import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View } from 'react-native';
 
-import { useQuery } from 'react-query';
+import { useQuery, QueryClient } from 'react-query';
 import styled from 'styled-components/native';
 
 import MovieTopBanner from '../components/Banner';
@@ -10,7 +10,13 @@ import Slider from '../components/Slider';
 import VMedia from '../components/VMedia';
 import { movies } from '../api';
 
-import { API_KEY } from '@env';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 //Main components: container
 const Main = styled.FlatList`
@@ -31,26 +37,25 @@ export default function Movie() {
 
   const {
     isLoading: upcomingLoading,
-    error: upcomingError,
     data: upcomingData,
-  } = useQuery('upcoming', movies.upcoming);
+    isRefetching: upcomingRefetching,
+  } = useQuery(['upcoming', 'movies'], movies.upcoming);
   const {
     isLoading: topRatedLoading,
-    error: topRatedError,
     data: topRatedData,
-  } = useQuery('topRated', movies.topRated);
+    isRefetching: topRatedRefetching,
+  } = useQuery(['topRated', 'movies'], movies.topRated);
   const {
     isLoading: popularLoading,
-    error: popularError,
     data: popularData,
-  } = useQuery('popular', movies.popular);
+    isRefetching: popularRefetching,
+  } = useQuery(['movies', 'popular'], movies.popular);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+    await queryClient.refetchQueries(['movies']);
+    setRefreshing(false);
+  };
 
   return (
     <Main
