@@ -36,13 +36,15 @@ const PosterImg = styled.Image`
 `;
 
 const TvTitle = styled.Text`
-  color: ${(props) => props.theme.mainTextColor};
+  color: ${(props) => props.theme.subTextColor};
   font-size: 14px;
   font-weight: 600;
 `;
 
 const TvScore = styled.Text`
-  color: ${(props) => props.theme.mainTextColor};
+  color: ${(props) => props.theme.subTextColor};
+  font-size: 14px;
+  margin-left: 2px;
 `;
 
 export default function Slider({ data, title }) {
@@ -68,14 +70,14 @@ export default function Slider({ data, title }) {
                 <View style={{ flexDirection: 'row', marginTop: 5 }}>
                   <MaterialIcons
                     name="star-rate"
-                    size={15}
+                    size={16}
                     color={
                       colorScheme === 'dark'
                         ? darkMode.subTextColor
                         : lightMode.subTextColor
                     }
                   />
-                  <TvScore>{item.vote_average}</TvScore>
+                  <TvScore>{item.vote_average + ''}</TvScore>
                 </View>
               ) : null}
             </View>
