@@ -13,7 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabs() {
+export default function Tabs({ navigation }) {
   const colorScheme = useColorScheme();
 
   const themeColor = {
@@ -30,7 +30,11 @@ export default function Tabs() {
         headerStyle: {
           backgroundColor: themeColor.tabBackground,
         },
-        headerTitleStyle: { color: themeColor.text },
+        headerTitleStyle: {
+          color: themeColor.text,
+          fontSize: 20,
+          marginBottom: 10,
+        },
         tabBarStyle: {
           backgroundColor: themeColor.tabBackground,
           color: themeColor.text,

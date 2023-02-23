@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, useColorScheme, Dimensions } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+
+import { useNavigation } from '@react-navigation/native';
 
 import styled from 'styled-components';
 
@@ -47,9 +48,18 @@ const Overview = styled.Text`
 `;
 
 export default function VMedia({ data, index }) {
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   return (
-    <Container>
+    <Container
+      onPress={() =>
+        navigation.navigate('Stacks', {
+          type: 'movie',
+          title: data.original_title,
+          id: data.id,
+        })
+      }
+    >
       <PosterImg source={{ uri: imgPath(data.poster_path) }} />
       <Info>
         <Title>

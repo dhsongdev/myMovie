@@ -32,7 +32,7 @@ const Title = styled.Text`
 `;
 
 //screen
-export default function Movie() {
+export default function Movie({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
 
   const {
@@ -67,16 +67,20 @@ export default function Movie() {
           <Slider
             data={upcomingLoading === false ? upcomingData.results : null}
             title={'Upcoming'}
+            navigation={navigation}
           />
           <Slider
             data={topRatedLoading === false ? topRatedData.results : null}
             title={'Top Rated'}
+            navigation={navigation}
           />
           <Title>Popular Now</Title>
         </View>
       }
       data={popularLoading === false ? popularData.results : null}
-      renderItem={({ item, index }) => <VMedia data={item} index={index} />}
+      renderItem={({ item, index, navigation }) => (
+        <VMedia data={item} index={index} navigation={navigation} />
+      )}
     />
   );
 }

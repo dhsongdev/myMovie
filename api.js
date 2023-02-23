@@ -17,9 +17,9 @@ export const movies = {
 };
 
 export const tvs = {
-  onTheAir: () =>
-    fetch(`${BASE_URL}tv/on_the_air?api_key=${API_KEY}&language=en-US`).then(
-      (res) => res.json()
+  trending: () =>
+    fetch(`${BASE_URL}trending/tv/day?api_key=${API_KEY}`).then((res) =>
+      res.json()
     ),
   popular: () =>
     fetch(`${BASE_URL}tv/popular?api_key=${API_KEY}&language=en-US`).then(
@@ -29,6 +29,10 @@ export const tvs = {
     fetch(`${BASE_URL}tv/top_rated?api_key=${API_KEY}&language=en-US`).then(
       (res) => res.json()
     ),
+  detail: ({ queryKey }) =>
+    fetch(
+      `${BASE_URL}tv/${queryKey[1]}?api_key=${API_KEY}&language=en-US`
+    ).then((res) => res.json()),
 };
 
 export const search = {

@@ -32,21 +32,18 @@ const Title = styled.Text`
 export default function Tv() {
   const [refreshing, setRefreshing] = useState(false);
 
-  const {
-    isLoading: onTheAirLoading,
-    data: onTheAirData,
-    isRefetching: onTheAirRefetching,
-  } = useQuery(['tvs', 'onTheAir'], tvs.onTheAir);
-  const {
-    isLoading: popularLoading,
-    data: popularData,
-    isRefetching: popularRefetching,
-  } = useQuery(['tvs', 'popular'], tvs.popular);
-  const {
-    isLoading: topRatedLoading,
-    data: topRatedData,
-    isRefetching: topRatedRefetching,
-  } = useQuery(['tvs', 'topRated'], tvs.topRated);
+  const { isLoading: trendingLoading, data: trendingData } = useQuery(
+    ['tvs', 'onTheAir'],
+    tvs.trending
+  );
+  const { isLoading: popularLoading, data: popularData } = useQuery(
+    ['tvs', 'popular'],
+    tvs.popular
+  );
+  const { isLoading: topRatedLoading, data: topRatedData } = useQuery(
+    ['tvs', 'topRated'],
+    tvs.topRated
+  );
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -57,16 +54,16 @@ export default function Tv() {
   return (
     <Main>
       <Slider
+        data={trendingLoading === false ? trendingData.results : null}
+        title={'Daily Trending'}
+      />
+      <Slider
         data={popularLoading === false ? popularData.results : null}
         title={'Popular'}
       />
       <Slider
         data={topRatedLoading === false ? topRatedData.results : null}
         title={'Top Rated'}
-      />
-      <Slider
-        data={onTheAirLoading === false ? onTheAirData.results : null}
-        title={'On the Air'}
       />
     </Main>
   );

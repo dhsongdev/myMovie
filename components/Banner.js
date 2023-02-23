@@ -1,6 +1,7 @@
 //now playing movies
 import React from 'react';
-import { Dimensions, Image, ActivityIndicator } from 'react-native';
+import { Dimensions, Image, ActivityIndicator, Touchable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useQuery } from 'react-query';
 
@@ -27,6 +28,8 @@ const BannerTitle = styled.Text`
 `;
 
 export default function MovieTopBanner() {
+  const navigation = useNavigation();
+
   const { isLoading, data } = useQuery('nowPlaying', () =>
     fetch(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
@@ -48,7 +51,7 @@ export default function MovieTopBanner() {
         ></ActivityIndicator>
       ) : (
         data.results.map((a, index) => (
-          <Banner key={a.id}>
+          <Banner onPress={() => navigation.navigate('Stacks')} key={a.id}>
             <Image
               source={{
                 uri: backdropPath(a.backdrop_path),

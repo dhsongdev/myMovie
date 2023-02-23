@@ -33,12 +33,11 @@ export default function App() {
       require('/Users/dhsong/Desktop/myMovie/assets/fonts/BMEuljiro10yearslaterOTF.otf')
     ),
   ];
-  const imgs = [Asset.loadAsync(require('./assets/img/cat.jpg'))];
 
   //useEffect
   useEffect(() => {
     const prepare = async () => {
-      await Promise.all([...fonts, ...imgs]); //load assets functions
+      await Promise.all([...fonts]); //load assets functions
       setAppReady(true);
       //app ready -> hide splashscreen
       await SplashScreen.hideAsync();

@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
-export default function Stack1({ navigation: { navigate } }) {
+export default function Detail({ params }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity

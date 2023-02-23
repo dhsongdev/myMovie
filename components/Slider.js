@@ -11,6 +11,7 @@ import styled from 'styled-components';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { lightMode, darkMode } from '../themeColors';
+import { useNavigation } from '@react-navigation/native';
 
 const imgPath = (path) => {
   return `https://image.tmdb.org/t/p/w500${path}`;
@@ -48,12 +49,22 @@ const TvScore = styled.Text`
 `;
 
 export default function Slider({ data, title }) {
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
 
   const renderItem = ({ item }) => {
     return (
       <View style={{ margin: 7 }} key={item.id}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(
+              'Stacks',
+              item.original_name
+                ? { type: 'tv', title: item.original_name, id: item.id }
+                : { type: 'movie', title: item.original_title, id: item.id }
+            );
+          }}
+        >
           <PosterImg
             source={{
               uri: `${imgPath(item.poster_path)}`,
@@ -77,7 +88,7 @@ export default function Slider({ data, title }) {
                         : lightMode.subTextColor
                     }
                   />
-                  <TvScore>{item.vote_average + ''}</TvScore>
+                  <TvScore>{item.vote_average.toFixed(1)}</TvScore>
                 </View>
               ) : null}
             </View>

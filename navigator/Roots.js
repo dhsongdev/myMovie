@@ -8,9 +8,7 @@ const Stack = createNativeStackNavigator();
 
 export default function Roots() {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, presentation: 'modal' }}
-    >
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={Tabs} />
       <Stack.Screen name="Stacks" component={Stacks} />
     </Stack.Navigator>

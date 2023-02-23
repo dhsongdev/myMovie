@@ -15,6 +15,7 @@ import { search } from '../api';
 import { lightMode, darkMode } from '../themeColors';
 
 import styled from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -37,7 +38,7 @@ const Text = styled.Text`
 const SearchBar = styled.TextInput`
   color: ${(props) => props.theme.mainTextColor};
   opacity: 0.7;
-  border: solid lightgrey 0.2px;
+  border: solid lightgrey 0.4px;
   border-radius: 20px;
   margin: 15px 0px 11px 0px;
   padding: 10px 20px;
@@ -104,6 +105,7 @@ const Overview = styled.Text`
 `;
 
 export default function Search() {
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
 
   const [params, setParams] = useState('');
@@ -178,8 +180,23 @@ export default function Search() {
         style={{ width: windowWidth }}
       >
         {data.results.map((array) => (
-          <Container key={array.id}>
-            <PosterImg source={{ uri: imgPath(array.poster_path) }} />
+          <Container
+            onPress={() =>
+              navigation.navigate(
+                'Stacks',
+                array.original_name
+                  ? { type: 'tv', title: array.original_name, id: array.id }
+                  : { type: 'movie', title: array.original_title, id: array.id }
+              )
+            }
+            key={array.id}
+          >
+            {array.poster_path === null ? (
+              <PosterImg source={require('../assets/img/cat.jpg')} />
+            ) : (
+              <PosterImg source={{ uri: imgPath(array.poster_path) }} />
+            )}
+
             <Info>
               <Title>{selected === 'movie' ? array.title : array.name}</Title>
               <ReleaseDate>
