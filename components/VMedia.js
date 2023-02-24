@@ -55,8 +55,7 @@ export default function VMedia({ data, index }) {
       onPress={() =>
         navigation.navigate('Stacks', {
           type: 'movie',
-          title: data.original_title,
-          id: data.id,
+          data,
         })
       }
     >

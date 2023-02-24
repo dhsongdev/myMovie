@@ -185,8 +185,14 @@ export default function Search() {
               navigation.navigate(
                 'Stacks',
                 array.original_name
-                  ? { type: 'tv', title: array.original_name, id: array.id }
-                  : { type: 'movie', title: array.original_title, id: array.id }
+                  ? {
+                      type: 'tv',
+                      data: array,
+                    }
+                  : {
+                      type: 'movie',
+                      data: array,
+                    }
               )
             }
             key={array.id}

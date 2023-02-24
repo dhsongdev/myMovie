@@ -60,8 +60,8 @@ export default function Slider({ data, title }) {
             navigation.navigate(
               'Stacks',
               item.original_name
-                ? { type: 'tv', title: item.original_name, id: item.id }
-                : { type: 'movie', title: item.original_title, id: item.id }
+                ? { type: 'tv', data: item }
+                : { type: 'movie', data: item }
             );
           }}
         >
