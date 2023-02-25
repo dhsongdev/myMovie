@@ -123,7 +123,7 @@ export default function Detail({
         <Title>{type === 'movie' ? preData.title : preData.name}</Title>
       </View>
       {isLoading === true ? null : (
-        <View style={{ width: '100%' }}>
+        <View style={{ width: '100%', paddingBottom: 20 }}>
           <Overview>
             {preData.overview === '' ? data.overview : preData.overview}
           </Overview>
@@ -196,34 +196,32 @@ export default function Detail({
             </Slider>
           </SliderContainer>
 
-          {data.videos.results ? (
+          {data.videos.results.length > 0 ? (
             <View>
               <SliderTitle style={{ marginBottom: 10 }}>Videos</SliderTitle>
               {data.videos.results.map((video) => (
-                <View
+                <TouchableOpacity
                   key={video.id}
                   style={{
-                    marginVertical: 0.5,
+                    marginVertical: 1,
                     backgroundColor:
                       colorScheme === 'dark'
                         ? darkMode.mainBG
                         : lightMode.mainBG,
+                    alignItems: 'center',
+                    paddingHorizontal: 30,
+                    paddingVertical: 10,
                   }}
+                  onPress={async () =>
+                    await WebBrowser.openBrowserAsync(
+                      `https://www.youtube.com/watch?v=${video.key}`
+                    )
+                  }
                 >
-                  <Button
-                    color={
-                      colorScheme === 'dark'
-                        ? darkMode.subTextColor
-                        : lightMode.subTextColor
-                    }
-                    title={`${video.site} | ${video.name}`}
-                    onPress={async () =>
-                      await WebBrowser.openBrowserAsync(
-                        `https://www.youtube.com/watch?v=${video.key}`
-                      )
-                    }
-                  />
-                </View>
+                  <Text
+                    style={{ textAlign: 'center', fontWeight: '500' }}
+                  >{`${video.site} | ${video.name}`}</Text>
+                </TouchableOpacity>
               ))}
             </View>
           ) : null}
