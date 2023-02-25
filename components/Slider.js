@@ -73,8 +73,8 @@ export default function Slider({ data, title }) {
           {item.original_name ? (
             <View style={{ marginTop: 5, alignItems: 'center' }}>
               <TvTitle>
-                {item.name.length > 14
-                  ? `${item.name.slice(0, 13)}...`
+                {item.name.length > 10
+                  ? `${item.name.slice(0, 9)}...`
                   : item.name}
               </TvTitle>
               {item.vote_average > 0 ? (

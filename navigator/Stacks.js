@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Detail from '../screens/Detail';
 
 import React from 'react';
-import { Button, useColorScheme } from 'react-native';
+import { Button, useColorScheme, Platform } from 'react-native';
 
 import { darkMode, lightMode } from '../themeColors';
 
@@ -18,7 +18,10 @@ export default function Stacks({
     <Stack.Navigator>
       <Stack.Screen
         options={{
-          headerLeft: () => <Button onPress={() => goBack()} title="Back" />,
+          headerLeft:
+            Platform.OS === 'ios'
+              ? () => <Button onPress={() => goBack()} title="Back" />
+              : null,
           headerStyle: {
             backgroundColor:
               colorScheme === 'dark' ? darkMode.mainBG : lightMode.mainBG,
